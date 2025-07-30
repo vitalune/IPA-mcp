@@ -1,0 +1,243 @@
+# API Scopes Configuration for Personal Knowledge Assistant MCP Server
+# 
+# This file defines the required API scopes for each service integration.
+# Scopes are defined using the principle of least privilege - only requesting
+# the minimum permissions necessary for each service's functionality.
+#
+# Security Note: All scopes are carefully chosen to minimize data access while
+# providing necessary functionality for personal knowledge management.
+
+# Google API Scopes
+google:
+  # Gmail API - Read-only access for email analysis and search
+  gmail:
+    scopes:
+      - "https://www.googleapis.com/auth/gmail.readonly"
+      - "https://www.googleapis.com/auth/gmail.labels"
+      - "https://www.googleapis.com/auth/gmail.metadata"
+    description: "Read-only access to Gmail messages, labels, and metadata"
+    justification: |
+      - gmail.readonly: Required to read email content for knowledge extraction and search
+      - gmail.labels: Needed to organize and categorize emails by labels
+      - gmail.metadata: Required for email metadata analysis (dates, participants, etc.)
+    sensitive_data: "Email content, sender/recipient information, timestamps"
+    data_retention: "Email content cached for 7 days, metadata for 30 days"
+    
+  # Google Drive API - Read-only access for document analysis
+  drive:
+    scopes:
+      - "https://www.googleapis.com/auth/drive.readonly"
+      - "https://www.googleapis.com/auth/drive.metadata.readonly"
+    description: "Read-only access to Google Drive files and metadata"
+    justification: |
+      - drive.readonly: Required to read document content for knowledge extraction
+      - drive.metadata.readonly: Needed for file organization and search indexing
+    sensitive_data: "Document content, file names, modification dates, sharing settings"
+    data_retention: "Document content cached for 7 days, metadata for 30 days"
+    
+  # Google Calendar API - Read-only access for schedule analysis
+  calendar:
+    scopes:
+      - "https://www.googleapis.com/auth/calendar.readonly"
+    description: "Read-only access to Google Calendar events"
+    justification: |
+      - calendar.readonly: Required to analyze schedule patterns and meeting contexts
+    sensitive_data: "Event details, attendees, locations, times"
+    data_retention: "Calendar data cached for 24 hours only"
+    
+  # Google Contacts API - Read-only access for contact information
+  contacts:
+    scopes:
+      - "https://www.googleapis.com/auth/contacts.readonly"
+    description: "Read-only access to Google Contacts"
+    justification: |
+      - contacts.readonly: Required to enrich communication analysis with contact context
+    sensitive_data: "Contact names, email addresses, phone numbers"
+    data_retention: "Contact data cached for 30 days"
+
+# Microsoft 365 API Scopes
+microsoft:
+  # Outlook API - Read-only access for email analysis
+  outlook:
+    scopes:
+      - "https://graph.microsoft.com/Mail.Read"
+      - "https://graph.microsoft.com/Mail.ReadBasic"
+      - "https://graph.microsoft.com/MailboxSettings.Read"
+    description: "Read-only access to Outlook emails and settings"
+    justification: |
+      - Mail.Read: Required to read email content for knowledge extraction
+      - Mail.ReadBasic: Needed for basic email metadata
+      - MailboxSettings.Read: Required for proper email handling configuration
+    sensitive_data: "Email content, sender/recipient information, timestamps"
+    data_retention: "Email content cached for 7 days, metadata for 30 days"
+    
+  # OneDrive API - Read-only access for document analysis
+  onedrive:
+    scopes:
+      - "https://graph.microsoft.com/Files.Read"
+      - "https://graph.microsoft.com/Files.Read.All"
+    description: "Read-only access to OneDrive files"
+    justification: |
+      - Files.Read: Required to read document content for knowledge extraction
+      - Files.Read.All: Needed for comprehensive file access across drives
+    sensitive_data: "Document content, file names, modification dates"
+    data_retention: "Document content cached for 7 days, metadata for 30 days"
+    
+  # Teams API - Read-only access for conversation analysis
+  teams:
+    scopes:
+      - "https://graph.microsoft.com/Chat.Read"
+      - "https://graph.microsoft.com/Channel.ReadBasic.All"
+    description: "Read-only access to Teams chats and channels"
+    justification: |
+      - Chat.Read: Required to analyze team conversations for knowledge extraction
+      - Channel.ReadBasic.All: Needed for channel context and organization
+    sensitive_data: "Chat messages, participant information, timestamps"
+    data_retention: "Chat data cached for 24 hours only"
+
+# Twitter/X API v2 Scopes
+twitter:
+  scopes:
+    - "tweet.read"
+    - "users.read"
+    - "bookmark.read"
+    - "like.read"
+  description: "Read-only access to Twitter/X content"
+  justification: |
+    - tweet.read: Required to read tweet content for knowledge extraction
+    - users.read: Needed for user context and profile information
+    - bookmark.read: Required to access saved bookmarks for analysis
+    - like.read: Needed for engagement pattern analysis
+  sensitive_data: "Tweet content, user profiles, engagement data"
+  data_retention: "Tweet content cached for 3 days, user data for 7 days"
+  rate_limits:
+    tweets: "300 requests per 15 minutes"
+    users: "300 requests per 15 minutes"
+    bookmarks: "75 requests per 15 minutes"
+
+# LinkedIn API Scopes
+linkedin:
+  scopes:
+    - "r_liteprofile"
+    - "r_emailaddress"
+    - "w_member_social"  # Only for reading saved posts
+  description: "Limited access to LinkedIn profile and content"
+  justification: |
+    - r_liteprofile: Required for basic profile information
+    - r_emailaddress: Needed for account identification
+    - w_member_social: Used only for reading saved posts and articles
+  sensitive_data: "Profile information, email address, saved content"
+  data_retention: "Profile data cached for 7 days, content for 3 days"
+  limitations: "LinkedIn API has strict usage policies and limited access"
+
+# Notion API Scopes
+notion:
+  scopes:
+    - "read"
+  description: "Read-only access to Notion workspaces"
+  justification: |
+    - read: Required to access pages and databases for knowledge extraction
+  sensitive_data: "Page content, database entries, workspace structure"
+  data_retention: "Content cached for 7 days, structure metadata for 30 days"
+  integration_type: "Internal integration with user consent"
+
+# Slack API Scopes
+slack:
+  scopes:
+    - "channels:read"
+    - "groups:read"
+    - "im:read"
+    - "mpim:read"
+    - "users:read"
+    - "files:read"
+  description: "Read-only access to Slack workspace content"
+  justification: |
+    - channels:read: Required to read public channel messages
+    - groups:read: Needed for private group messages (with permission)
+    - im:read: Required for direct message analysis
+    - mpim:read: Needed for multi-person direct messages
+    - users:read: Required for user context and mentions
+    - files:read: Needed to analyze shared files and attachments
+  sensitive_data: "Messages, files, user information, workspace structure"
+  data_retention: "Messages cached for 24 hours, files for 3 days"
+
+# Discord API Scopes (if supported in future)
+discord:
+  scopes:
+    - "guilds"
+    - "guilds.members.read"
+    - "messages.read"
+  description: "Read-only access to Discord servers and messages"
+  justification: |
+    - guilds: Required to access server information
+    - guilds.members.read: Needed for member context
+    - messages.read: Required to read message content for analysis
+  sensitive_data: "Messages, user information, server structure"
+  data_retention: "Messages cached for 24 hours only"
+  status: "planned"
+
+# Security and Privacy Guidelines
+security_guidelines:
+  scope_validation:
+    - "All scopes are validated before use"
+    - "Unused permissions are automatically revoked"
+    - "Regular scope audits are performed"
+    
+  data_minimization:
+    - "Only request minimum required permissions"
+    - "Cache only essential data with short retention periods"
+    - "Implement automatic data cleanup"
+    
+  user_consent:
+    - "Explicit user consent required for each service"
+    - "Clear explanation of data usage provided"
+    - "Users can revoke permissions at any time"
+    
+  compliance:
+    - "GDPR compliant data handling"
+    - "CCPA privacy rights respected"
+    - "SOC 2 Type II controls implemented"
+
+# Default Cache Retention Periods
+default_retention:
+  high_sensitivity:    # Personal messages, private documents
+    cache_duration: "24 hours"
+    examples: ["direct messages", "private emails", "personal documents"]
+    
+  medium_sensitivity:  # Professional content, public posts
+    cache_duration: "3 days"
+    examples: ["work emails", "public posts", "shared documents"]
+    
+  low_sensitivity:     # Metadata, public information
+    cache_duration: "7 days"
+    examples: ["file metadata", "public profiles", "timestamps"]
+    
+  structural_data:     # Non-sensitive organizational data
+    cache_duration: "30 days"
+    examples: ["folder structures", "labels", "categories"]
+
+# Audit and Monitoring
+audit_requirements:
+  - "All API calls are logged with timestamps"
+  - "Data access patterns are monitored"
+  - "Unusual activity triggers alerts"
+  - "Regular compliance reports are generated"
+  - "User consent status is tracked"
+
+# Emergency Procedures
+emergency_procedures:
+  data_breach:
+    - "Immediately revoke all API tokens"
+    - "Purge all cached data"
+    - "Notify affected users within 24 hours"
+    - "Generate incident report"
+    
+  scope_escalation:
+    - "Any scope changes require user re-consent"
+    - "Escalated permissions are time-limited"
+    - "Automatic downgrade after specified period"
+    
+  service_compromise:
+    - "Isolate affected service integration"
+    - "Preserve audit logs for investigation"
+    - "Implement alternative access methods if available"

@@ -1,0 +1,346 @@
+# Personal Knowledge Assistant MCP Server Configuration
+# Copy this file to config.yaml and customize for your environment
+
+# Application Settings
+app:
+  name: "Personal Knowledge Assistant"
+  version: "1.0.0"
+  environment: "development"  # development, staging, production
+  debug: true                 # Set to false in production
+  log_level: "INFO"          # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Server Configuration
+server:
+  host: "127.0.0.1"          # Server bind address
+  port: 8080                  # Server port (usually 8080 for MCP)
+  max_connections: 100        # Maximum concurrent connections
+  request_timeout: 30         # Request timeout in seconds
+
+# Security Settings
+security:
+  # Authentication
+  require_mfa: false                    # Enable MFA for production
+  session_timeout_minutes: 60          # Session timeout
+  max_login_attempts: 5                # Failed login attempts before lockout
+  lockout_duration_minutes: 15         # Account lockout duration
+  
+  # Rate Limiting
+  api_rate_limit_per_minute: 60        # API requests per minute per user
+  cache_rate_limit_per_hour: 500       # Cache operations per hour
+  
+  # Network Security
+  allowed_origins:                      # CORS allowed origins
+    - "http://localhost:3000"
+    - "https://claude.ai"
+  trusted_proxies: []                   # Trusted proxy IP addresses
+  
+  # File Upload Security
+  max_file_size_mb: 10                 # Maximum file upload size
+  allowed_file_types:                   # Allowed file extensions
+    - ".txt"
+    - ".pdf"
+    - ".doc"
+    - ".docx"
+    - ".json"
+    - ".csv"
+    - ".xlsx"
+
+# Encryption Configuration
+encryption:
+  # Master encryption key (set via environment variable)
+  master_key: "${ENCRYPTION_MASTER_KEY}"  # 32-byte base64 encoded key
+  
+  # Key Derivation Settings
+  pbkdf2_iterations: 100000               # PBKDF2 iterations (min: 50000)
+  key_salt: "${ENCRYPTION_KEY_SALT}"      # Key derivation salt
+  
+  # Password Hashing (Argon2)
+  argon2_time_cost: 2                     # Time cost parameter
+  argon2_memory_cost: 65536               # Memory cost in KB
+  argon2_parallelism: 1                   # Parallelism parameter
+  
+  # Token Settings
+  token_expiry_hours: 24                  # OAuth token expiry
+  refresh_token_expiry_days: 30           # Refresh token expiry
+
+# Privacy Settings
+privacy:
+  # Data Collection
+  collect_analytics: false               # Enable usage analytics
+  anonymize_logs: true                   # Anonymize IP addresses in logs
+  
+  # Data Retention
+  cache_retention_days: 7                # Cache data retention period
+  log_retention_days: 90                 # Log file retention period
+  audit_retention_years: 2               # Audit log retention period
+  
+  # User Rights (GDPR Compliance)
+  require_explicit_consent: true         # Require explicit user consent
+  enable_data_export: true               # Enable data export feature
+  enable_data_deletion: true             # Enable data deletion feature
+  
+  # Geographic Restrictions (optional)
+  allowed_countries: []                  # Allowed country codes (empty = all)
+  blocked_countries: []                  # Blocked country codes
+  
+  # Data Processing Purposes
+  processing_purposes:
+    - "personal_knowledge_management"
+    - "data_analysis"
+    - "search_optimization"
+
+# Database Configuration
+database:
+  # Storage Paths (expand ~ to user home directory)
+  data_directory: "~/.ipa_mcp/data"      # Main data storage directory
+  cache_directory: "~/.ipa_mcp/cache"   # Cache storage directory
+  logs_directory: "~/.ipa_mcp/logs"     # Log storage directory
+  
+  # Database Settings
+  encrypt_database: true                 # Encrypt database files
+  database_backup_enabled: true         # Enable automatic backups
+  backup_retention_count: 5              # Number of backups to retain
+  
+  # Cache Configuration
+  max_cache_size_mb: 100                # Maximum cache size in MB
+  cache_compression_enabled: true        # Enable cache compression
+  cache_ttl_hours: 24                   # Cache time-to-live in hours
+
+# API Integration Settings
+integrations:
+  
+  # Gmail Integration
+  gmail:
+    enabled: true                        # Enable Gmail integration
+    credentials_file: "config/google_credentials.json"
+    scopes:
+      - "https://www.googleapis.com/auth/gmail.readonly"
+      - "https://www.googleapis.com/auth/gmail.send"
+    rate_limit:
+      requests_per_second: 5             # Gmail API rate limit
+      daily_quota: 1000000000            # Daily quota (1 billion units)
+    batch_size: 100                      # Batch size for bulk operations
+    
+  # Google Drive Integration
+  drive:
+    enabled: true                        # Enable Google Drive integration
+    credentials_file: "config/google_credentials.json"
+    scopes:
+      - "https://www.googleapis.com/auth/drive.readonly"
+    rate_limit:
+      requests_per_second: 10            # Drive API rate limit
+      daily_quota: 20000                 # Daily quota limit
+    max_file_size_mb: 100               # Maximum file size to process
+    
+  # Twitter Integration
+  twitter:
+    enabled: false                       # Enable Twitter integration
+    client_id: "${TWITTER_CLIENT_ID}"    # Set via environment variable
+    client_secret: "${TWITTER_CLIENT_SECRET}"
+    bearer_token: "${TWITTER_BEARER_TOKEN}"
+    scopes:
+      - "tweet.read"
+      - "tweet.write"
+      - "users.read"
+    rate_limit:
+      requests_per_window: 300           # Requests per 15-minute window
+      window_minutes: 15                 # Rate limit window
+    max_tweet_length: 280               # Maximum tweet length
+    
+  # LinkedIn Integration
+  linkedin:
+    enabled: false                       # Enable LinkedIn integration
+    client_id: "${LINKEDIN_CLIENT_ID}"   # Set via environment variable
+    client_secret: "${LINKEDIN_CLIENT_SECRET}"
+    scopes:
+      - "r_liteprofile"
+      - "r_emailaddress"
+      - "w_member_social"
+    rate_limit:
+      requests_per_second: 2             # LinkedIn API rate limit
+      daily_quota: 500                   # Daily request quota
+    max_post_length: 3000               # Maximum post length
+
+# OAuth Configuration
+oauth:
+  redirect_uri: "http://localhost:8080/oauth/callback"
+  state_expiry_minutes: 10               # OAuth state parameter expiry
+  
+  # Service-specific redirect URIs
+  service_redirects:
+    gmail: "http://localhost:8080/oauth/callback/gmail"
+    drive: "http://localhost:8080/oauth/callback/drive"
+    twitter: "http://localhost:8080/oauth/callback/twitter"
+    linkedin: "http://localhost:8080/oauth/callback/linkedin"
+
+# Audit Configuration
+audit:
+  # Basic Audit Settings
+  audit_enabled: true                    # Enable audit logging
+  audit_file_rotation: true             # Enable log file rotation
+  audit_max_file_size_mb: 50            # Maximum audit file size
+  
+  # Event Tracking
+  track_api_calls: true                 # Track all API calls
+  track_data_access: true               # Track data access events
+  track_configuration_changes: true     # Track configuration changes
+  
+  # Security Alerting
+  security_alerts_enabled: true         # Enable security alerts
+  failed_login_alert_threshold: 3       # Failed login alert threshold
+  
+  # Log Integrity
+  audit_log_signing: true               # Enable audit log digital signing
+  log_integrity_check_interval_hours: 24 # Integrity check interval
+
+# Analytics Configuration
+analytics:
+  # Natural Language Processing
+  nlp_model: "en_core_web_sm"           # SpaCy model for NLP processing
+  sentiment_analysis_enabled: true      # Enable sentiment analysis
+  entity_extraction_enabled: true       # Enable entity extraction
+  keyword_extraction_enabled: true      # Enable keyword extraction
+  
+  # Analytics Engine Settings
+  correlation_threshold: 0.7            # Minimum correlation threshold
+  trend_detection_window_days: 30       # Trend detection window
+  anomaly_detection_enabled: true       # Enable anomaly detection
+  
+  # Performance Settings
+  analysis_cache_ttl_hours: 6          # Analysis result cache TTL
+  enable_predictive_caching: true       # Precompute likely queries
+  max_analysis_items: 10000            # Maximum items per analysis
+
+# Logging Configuration
+logging:
+  # Log Levels by Component
+  loggers:
+    root:
+      level: "INFO"
+      handlers: ["console", "file"]
+    
+    src.integrations:
+      level: "DEBUG"                     # More detailed API integration logs
+      
+    src.security:
+      level: "WARNING"                   # Security events only
+      
+    src.analytics:
+      level: "INFO"                      # Analytics processing logs
+  
+  # Log Handlers
+  handlers:
+    console:
+      class: "StreamHandler"
+      formatter: "detailed"
+      level: "INFO"
+    
+    file:
+      class: "RotatingFileHandler"
+      filename: "~/.ipa_mcp/logs/app.log"
+      maxBytes: 10485760                # 10MB
+      backupCount: 5
+      formatter: "detailed"
+      level: "DEBUG"
+  
+  # Log Formatters
+  formatters:
+    simple:
+      format: "%(levelname)s - %(message)s"
+    
+    detailed:
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      datefmt: "%Y-%m-%d %H:%M:%S"
+
+# Development Settings (only used when environment = "development")
+development:
+  # Mock API responses for testing
+  mock_api_responses: false
+  
+  # Skip authentication for testing
+  skip_authentication: false
+  
+  # Enable development tools
+  enable_dev_tools: true
+  
+  # Test data generation
+  generate_test_data: false
+
+# Production Settings (only used when environment = "production")
+production:
+  # Force secure settings
+  force_https: true
+  
+  # Disable debug features
+  disable_debug_endpoints: true
+  
+  # Enhanced security
+  require_encrypted_storage: true
+  
+  # Performance optimizations
+  enable_compression: true
+  optimize_queries: true
+
+# Environment Variable Defaults
+# These can be overridden by setting environment variables
+environment_defaults:
+  IPA_MCP_ENVIRONMENT: "development"
+  IPA_MCP_DEBUG: "true"
+  IPA_MCP_LOG_LEVEL: "INFO"
+  IPA_MCP_DATA_DIRECTORY: "~/.ipa_mcp/data"
+  IPA_MCP_ENCRYPTION_ENABLED: "true"
+
+# Feature Flags (for gradual rollout of new features)
+features:
+  # Analytics Features
+  advanced_sentiment_analysis: true
+  predictive_analytics: false          # Coming in v1.1
+  cross_platform_correlation: true
+  
+  # Integration Features
+  calendar_integration: false          # Coming in v1.1
+  slack_integration: false            # Planned for v1.2
+  microsoft_office_integration: false # Planned for v1.2
+  
+  # UI Features
+  web_dashboard: false                 # Coming in v1.1
+  mobile_app: false                   # Planned for v2.0
+  
+  # Security Features
+  advanced_mfa: false                 # Coming in v1.1
+  hardware_token_support: false      # Planned for v1.2
+
+# Monitoring and Health Checks
+monitoring:
+  # Health Check Settings
+  health_check_enabled: true
+  health_check_interval_minutes: 5
+  
+  # Performance Monitoring
+  performance_monitoring_enabled: true
+  slow_query_threshold_ms: 1000
+  
+  # Resource Monitoring
+  monitor_memory_usage: true
+  monitor_disk_usage: true
+  memory_warning_threshold_mb: 1000
+  disk_warning_threshold_mb: 500
+
+# Backup and Recovery
+backup:
+  # Automatic Backup Settings
+  auto_backup_enabled: true
+  backup_interval_hours: 24
+  backup_retention_days: 30
+  
+  # Backup Destinations
+  backup_destinations:
+    - type: "local"
+      path: "~/.ipa_mcp/backups"
+    # - type: "cloud"
+    #   provider: "aws_s3"
+    #   bucket: "my-backup-bucket"
+  
+  # Recovery Settings
+  enable_point_in_time_recovery: true
+  recovery_point_interval_hours: 1

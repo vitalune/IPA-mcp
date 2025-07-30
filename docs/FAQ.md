@@ -43,7 +43,7 @@ Additional services are planned for future releases.
 
 ### How do I install the Personal Knowledge Assistant?
 
-1. Clone the repository: `git clone https://github.com/your-org/IPA-mcp.git`
+1. Clone the repository: `git clone https://github.com/vitalune/IPA-mcp.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Configure API credentials (see [API Setup Guide](API_SETUP.md))
 4. Add to Claude Desktop configuration

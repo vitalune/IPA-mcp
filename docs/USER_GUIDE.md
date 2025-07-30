@@ -456,7 +456,7 @@ Configure the assistant to match your working style:
 2. **Review Configuration**: Ensure all API credentials are valid and properly configured
 3. **Test Individual Services**: Try queries that focus on one service at a time
 4. **Consult Logs**: Check the application logs for detailed error messages
-5. **Community Support**: Visit our [GitHub Discussions](https://github.com/your-org/IPA-mcp/discussions) for help
+5. **Community Support**: Visit our [GitHub Discussions](https://github.com/vitalune/IPA-mcp/discussions) for help
 
 ## 📈 Maximizing Value
 

@@ -37,7 +37,7 @@ Complete step-by-step installation guide for the Personal Knowledge Assistant MC
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/IPA-mcp.git
+git clone https://github.com/vitalune/IPA-mcp.git
 cd IPA-mcp
 
 # Install using the setup script
@@ -49,7 +49,7 @@ cd IPA-mcp
 #### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/IPA-mcp.git
+git clone https://github.com/vitalune/IPA-mcp.git
 cd IPA-mcp
 ```
 
@@ -90,7 +90,7 @@ pip install -e .
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/IPA-mcp.git
+git clone https://github.com/vitalune/IPA-mcp.git
 cd IPA-mcp
 
 # Build the Docker image
@@ -476,8 +476,8 @@ If you encounter issues:
 2. **Review configuration**: Verify your `config/config.yaml` settings
 3. **Test components**: Run individual tests to isolate issues
 4. **Consult documentation**: Check our [Troubleshooting Guide](TROUBLESHOOTING.md)
-5. **Community support**: Ask questions in [GitHub Discussions](https://github.com/your-org/IPA-mcp/discussions)
-6. **Report bugs**: Create an issue on [GitHub Issues](https://github.com/your-org/IPA-mcp/issues)
+5. **Community support**: Ask questions in [GitHub Discussions](https://github.com/vitalune/IPA-mcp/discussions)
+6. **Report bugs**: Create an issue on [GitHub Issues](https://github.com/vitalune/IPA-mcp/issues)
 
 ## ✅ Next Steps
 

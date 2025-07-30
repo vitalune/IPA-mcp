@@ -617,8 +617,8 @@ tail -f ~/.ipa_mcp/logs/debug.log
 ### IPA-MCP Support
 
 - **Documentation**: Check our [comprehensive docs](../README.md)
-- **Issues**: [GitHub Issues](https://github.com/your-org/IPA-mcp/issues)
-- **Community**: [GitHub Discussions](https://github.com/your-org/IPA-mcp/discussions)
+- **Issues**: [GitHub Issues](https://github.com/vitalune/IPA-mcp/issues)
+- **Community**: [GitHub Discussions](https://github.com/vitalune/IPA-mcp/discussions)
 
 ---
 

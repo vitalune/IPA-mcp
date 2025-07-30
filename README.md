@@ -56,7 +56,7 @@ A comprehensive Model Context Protocol (MCP) server that transforms how you mana
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-org/IPA-mcp.git
+git clone https://github.com/vitalune/IPA-mcp.git
 cd IPA-mcp
 ```
 
@@ -268,29 +268,9 @@ For more details, see our [Security Documentation](docs/SECURITY.md).
 ## 🆘 Support
 
 - **Documentation**: Check our [comprehensive docs](docs/)
-- **Issues**: [GitHub Issues](https://github.com/your-org/IPA-mcp/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/IPA-mcp/discussions)
-- **Security**: For security issues, email security@your-org.com
-
-## 🗺️ Roadmap
-
-### Current Version (v1.0)
-- ✅ Core MCP server implementation
-- ✅ Email and social media integration
-- ✅ Basic analytics and insights
-- ✅ Security and encryption
-
-### Upcoming Features (v1.1)
-- 📅 Calendar integration and scheduling optimization
-- 🎯 Advanced goal tracking and habit formation
-- 🤖 Enhanced AI-powered insights and predictions
-- 📱 Mobile companion app
-
-### Future Vision (v2.0)
-- 🌍 Multi-user collaboration features
-- 🔗 Advanced workflow automation
-- 📊 Real-time dashboard and visualizations
-- 🧩 Plugin ecosystem for custom integrations
+- **Issues**: [GitHub Issues](https://github.com/vitalune/IPA-mcp/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/vitalune/IPA-mcp/discussions)
+- **Security**: For security issues, email amirvalizadeh@gmail.com
 
 ---
 
@@ -298,6 +278,6 @@ For more details, see our [Security Documentation](docs/SECURITY.md).
 
 **Transform your personal knowledge management with AI-powered insights**
 
-[Get Started](docs/INSTALL.md) | [Documentation](docs/) | [Community](https://github.com/your-org/IPA-mcp/discussions)
+[Get Started](docs/INSTALL.md) | [Documentation](docs/) | [Community](https://github.com/vitalune/discussions)
 
 </div>

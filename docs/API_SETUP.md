@@ -8,6 +8,8 @@ The Personal Knowledge Assistant integrates with multiple services to provide co
 
 ## 📋 Supported Services
 
+NOTE: Enabling all API clients is **not required.**
+
 | Service | Features | Required Scopes |
 |---------|----------|-----------------|
 | **Gmail** | Email search, send, analysis | `gmail.readonly`, `gmail.send` |

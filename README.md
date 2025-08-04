@@ -270,7 +270,7 @@ For more details, see our [Security Documentation](docs/SECURITY.md).
 - **Documentation**: Check our [comprehensive docs](docs/)
 - **Issues**: [GitHub Issues](https://github.com/vitalune/IPA-mcp/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/vitalune/IPA-mcp/discussions)
-- **Security**: For security issues, email amirvalizadeh@gmail.com
+- **Security**: For security issues, email amirvalizadeh161@gmail.com
 
 ---
 
